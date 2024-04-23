@@ -3,6 +3,7 @@ using DesignPatterns.AbstractFactory;
 using DesignPatterns.Adapter;
 using DesignPatterns.Bridge.Programmers;
 using DesignPatterns.Bridge.Languages;
+using DesignPatterns.Builder;
 
 namespace DesignPatterns
 {
@@ -48,15 +49,33 @@ namespace DesignPatterns
 
             //https://metanit.com/sharp/patterns/4.6.php
 
-            // создаем нового программиста, он работает с с++
-            Programmer freelancer = new FreelanceProgrammer(new CPPLanguage());
-            freelancer.DoWork();
-            freelancer.EarnMoney();
+            //// создаем нового программиста, он работает с с++
+            //Programmer freelancer = new FreelanceProgrammer(new CPPLanguage());
+            //freelancer.DoWork();
+            //freelancer.EarnMoney();
 
-            // пришел новый заказ, но теперь нужен c#
-            freelancer.Language = new CSharpLanguage();
-            freelancer.DoWork();
-            freelancer.EarnMoney();
+            //// пришел новый заказ, но теперь нужен c#
+            //freelancer.Language = new CSharpLanguage();
+            //freelancer.DoWork();
+            //freelancer.EarnMoney();
+
+            #endregion
+
+            #region Builder
+
+            //https://metanit.com/sharp/patterns/2.5.php
+
+            // содаем объект пекаря
+            Baker baker = new Baker();
+            // создаем билдер для ржаного хлеба
+            BreadBuilder builder = new RyeBreadBuilder();
+            // выпекаем
+            Bread ryeBread = baker.Bake(builder);
+            Console.WriteLine(ryeBread.ToString());
+            // cоздаем билдер для пшеничного хлеба
+            builder = new WheatBreadBuilder();
+            Bread wheatBread = baker.Bake(builder);
+            Console.WriteLine(wheatBread.ToString());
 
             #endregion
 
