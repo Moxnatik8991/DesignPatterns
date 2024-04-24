@@ -4,6 +4,7 @@ using DesignPatterns.Adapter;
 using DesignPatterns.Bridge.Programmers;
 using DesignPatterns.Bridge.Languages;
 using DesignPatterns.Builder;
+using DesignPatterns.ChainOfResponsibility;
 
 namespace DesignPatterns
 {
@@ -65,17 +66,37 @@ namespace DesignPatterns
 
             //https://metanit.com/sharp/patterns/2.5.php
 
-            // содаем объект пекаря
-            Baker baker = new Baker();
-            // создаем билдер для ржаного хлеба
-            BreadBuilder builder = new RyeBreadBuilder();
-            // выпекаем
-            Bread ryeBread = baker.Bake(builder);
-            Console.WriteLine(ryeBread.ToString());
-            // cоздаем билдер для пшеничного хлеба
-            builder = new WheatBreadBuilder();
-            Bread wheatBread = baker.Bake(builder);
-            Console.WriteLine(wheatBread.ToString());
+            //// содаем объект пекаря
+            //Baker baker = new Baker();
+            //// создаем билдер для ржаного хлеба
+            //BreadBuilder builder = new RyeBreadBuilder();
+            //// выпекаем
+            //Bread ryeBread = baker.Bake(builder);
+            //Console.WriteLine(ryeBread.ToString());
+            //// cоздаем билдер для пшеничного хлеба
+            //builder = new WheatBreadBuilder();
+            //Bread wheatBread = baker.Bake(builder);
+            //Console.WriteLine(wheatBread.ToString());
+
+            #endregion
+
+            #region Chain of responsibility
+
+            //https://metanit.com/sharp/patterns/3.7.php
+
+
+            Receiver receiver = new Receiver(false, true, true);
+
+            PaymentHandler bankPaymentHandler = new BankPaymentHandler();
+            PaymentHandler moneyPaymentHadler = new MoneyPaymentHandler();
+            PaymentHandler paypalPaymentHandler = new PayPalPaymentHandler();
+
+            bankPaymentHandler.Successor = paypalPaymentHandler;
+            paypalPaymentHandler.Successor = moneyPaymentHadler;
+
+            bankPaymentHandler.Handle(receiver);
+
+            
 
             #endregion
 
