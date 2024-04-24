@@ -5,6 +5,7 @@ using DesignPatterns.Bridge.Programmers;
 using DesignPatterns.Bridge.Languages;
 using DesignPatterns.Builder;
 using DesignPatterns.ChainOfResponsibility;
+using DesignPatterns.Command;
 
 namespace DesignPatterns
 {
@@ -85,18 +86,53 @@ namespace DesignPatterns
             //https://metanit.com/sharp/patterns/3.7.php
 
 
-            Receiver receiver = new Receiver(false, true, true);
+            //Receiver receiver = new Receiver(false, true, true);
 
-            PaymentHandler bankPaymentHandler = new BankPaymentHandler();
-            PaymentHandler moneyPaymentHadler = new MoneyPaymentHandler();
-            PaymentHandler paypalPaymentHandler = new PayPalPaymentHandler();
+            //PaymentHandler bankPaymentHandler = new BankPaymentHandler();
+            //PaymentHandler moneyPaymentHadler = new MoneyPaymentHandler();
+            //PaymentHandler paypalPaymentHandler = new PayPalPaymentHandler();
 
-            bankPaymentHandler.Successor = paypalPaymentHandler;
-            paypalPaymentHandler.Successor = moneyPaymentHadler;
+            //bankPaymentHandler.Successor = paypalPaymentHandler;
+            //paypalPaymentHandler.Successor = moneyPaymentHadler;
 
-            bankPaymentHandler.Handle(receiver);
+            //bankPaymentHandler.Handle(receiver);
 
-            
+            #endregion
+
+            #region Command
+
+            //https://metanit.com/sharp/patterns/3.3.php
+
+            //part1
+            //Pult pult = new Pult();
+            //TV tv = new TV();
+            //pult.SetCommand(new TVOnCommand(tv));
+            //pult.PressButton();
+            //pult.PressUndo();
+
+            //Microwave microwave = new Microwave();
+            //// 5000 - время нагрева пищи
+            //pult.SetCommand(new MicrowaveCommand(microwave, 5000));
+            //pult.PressButton();
+
+
+            //part2
+            TV tv = new TV();
+            Volume volume = new Volume();
+            MultiPult mPult = new MultiPult();
+            mPult.SetCommand(0, new TVOnCommand(tv));
+            mPult.SetCommand(1, new VolumeCommand(volume));
+            // включаем телевизор
+            mPult.PressButton(0);
+            // увеличиваем громкость
+            mPult.PressButton(1);
+            mPult.PressButton(1);
+            mPult.PressButton(1);
+            // действия отмены
+            mPult.PressUndoButton();
+            mPult.PressUndoButton();
+            mPult.PressUndoButton();
+            mPult.PressUndoButton();
 
             #endregion
 
